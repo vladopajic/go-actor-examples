@@ -5,7 +5,7 @@ github.com/golang-ds/queue v1.0.0 h1:hqcXLnt7tAZLWv3t5Dfh6y1gIgy0KCW/viiKSUG55cM
 github.com/golang-ds/queue v1.0.0/go.mod h1:0wfhzQPWD2kZRXcDIBwEe490RcBoXdcHuUiJVYgf3vU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
-github.com/vladopajic/go-actor v1.0.3-0.20221005090620-1d661de3f88d h1:/kSA1zCnnwLFbc01spvNmTxiwBnBF+Ccd/zR0tj4YFI=
-github.com/vladopajic/go-actor v1.0.3-0.20221005090620-1d661de3f88d/go.mod h1:8IcjhdPM6bBvRwKX1D4SzWpglSBU6BoW5J2MoQZoO+k=
+github.com/vladopajic/go-actor v1.0.3 h1:jcSmt1IlKUUwEAuhW8fOwsi4FEKYrumFVw/ZRUIMxY4=
+github.com/vladopajic/go-actor v1.0.3/go.mod h1:8IcjhdPM6bBvRwKX1D4SzWpglSBU6BoW5J2MoQZoO+k=
 go.uber.org/goleak v1.1.12 h1:gZAh5/EyT/HQwlpkCy6wTpqfH9H8Lz8zbm3dZh+OyzA=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
