@@ -1,4 +1,4 @@
-package main
+package e02
 
 import (
 	"time"
@@ -17,6 +17,7 @@ func (w *producerWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	case <-time.After(time.Second):
 		w.num++
 		w.outC <- w.num
+
 		return actor.WorkerContinue
 
 	case <-c.Done():

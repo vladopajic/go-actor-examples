@@ -8,6 +8,7 @@ linters:
     # - godot (too nit picking)
     # - ireturn  (we like when function returns interface)
     # - varnamelen  (we can handle this in code review step)
+    # - forbidigo
     - asasalint
     - asciicheck
     - bidichk
@@ -25,7 +26,6 @@ linters:
     - errorlint
     - exhaustive
     - exportloopref
-    - forbidigo
     - forcetypeassert
     - funlen
     - gochecknoglobals
@@ -112,3 +112,8 @@ issues:
     - path: _export_test\.go
       linters:
         - revive      ## Disabling linter because we intentionally want to use unexpored types in tests
+
+      # Linters excluded from examples
+    - path: example/*
+      linters:
+        - gomnd

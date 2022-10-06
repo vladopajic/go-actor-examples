@@ -1,9 +1,11 @@
-package main
+package e03
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // This program will demonstrate how to create actors with options
-func main() {
+func Run() {
 	launchReadySigC := make(chan struct{})
 
 	a := NewCountdownActor(launchReadySigC)

@@ -1,11 +1,11 @@
-package main
+package e04
 
 import (
 	"time"
 )
 
 // This program shows improved example #02
-func main() {
+func Run() {
 	launchReadySigC := make(chan struct{})
 
 	a := NewCountdownActor(launchReadySigC)

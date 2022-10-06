@@ -1,4 +1,4 @@
-package main
+package e04
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/vladopajic/go-actor/actor"
 )
 
-// NewCountdownActor creates new actor for launch pad countdowns. assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+// NewCountdownActor creates new actor for launch pad countdowns.
 func NewCountdownActor(launchReadySigC chan struct{}) actor.Actor {
 	w := &countdownWorker{
 		launchReadySigC: launchReadySigC,
@@ -19,7 +19,6 @@ func NewCountdownActor(launchReadySigC chan struct{}) actor.Actor {
 		actor.OptOnStart(w.onStart),
 		actor.OptOnStop(w.onStop),
 	)
-
 }
 
 type countdownWorker struct {

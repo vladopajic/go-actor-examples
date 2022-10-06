@@ -1,13 +1,15 @@
-package main
+package e01
 
 import (
 	"github.com/vladopajic/go-actor/actor"
+
+	"github.com/vladopajic/go-actor-examples/lib"
 )
 
 // This program will demonstrate how to create actors for producer-consumer use case, where
 // producer will create incremented number on every 1 second interval and
 // consumer will print whaterver number it receives
-func main() {
+func Run() {
 	mailbox := actor.NewMailbox[int]()
 
 	// Producer and consumer workers are created with same mailbox
@@ -33,5 +35,5 @@ func main() {
 	a.Start()
 	defer a.Stop()
 
-	select {}
+	<-lib.WaitForTermination()
 }

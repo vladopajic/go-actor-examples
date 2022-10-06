@@ -1,13 +1,15 @@
-package main
+package e02
 
 import (
 	"github.com/vladopajic/go-actor/actor"
+
+	"github.com/vladopajic/go-actor-examples/lib"
 )
 
 // This program will demonstrate how to fan-out Mailbox. Example is vary similar
 // to previous except that this time we intentionally want to have single producer
 // that sends messages to many consumers.
-func main() {
+func Run() {
 	mailbox := actor.NewMailbox[int]()
 
 	mm := actor.FanOut(mailbox.ReceiveC(), 3)
@@ -30,5 +32,5 @@ func main() {
 	a.Start()
 	defer a.Stop()
 
-	select {}
+	<-lib.WaitForTermination()
 }

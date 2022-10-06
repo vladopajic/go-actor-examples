@@ -22,3 +22,9 @@ test:
 tidy:
 	go mod tidy
 	go fmt ./...
+
+
+# Runs example
+.PHONY: run
+run:
+	go run ./cmd/... -example=$(filter-out $@,$(MAKECMDGOALS))
