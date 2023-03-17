@@ -10,19 +10,20 @@ import (
 // to previous except that this time we intentionally want to have single producer
 // that sends messages to many consumers.
 func Run() {
-	mailbox := actor.NewMailbox[int]()
+	mbx := actor.NewMailbox[int]()
+	mbxx := actor.NewMailboxes[int](3)
 
-	mm := actor.FanOut(mailbox.ReceiveC(), 3)
+	// everything received by mbx will be forwarded to all mailboxes in mbxx
+	actor.FanOut[int](mbx, mbxx)
 
-	pw := &producerWorker{outC: mailbox.SendC()}
-	cw1 := &consumerWorker{inC: mm[0].ReceiveC(), id: 1}
-	cw2 := &consumerWorker{inC: mm[1].ReceiveC(), id: 2}
-	cw3 := &consumerWorker{inC: mm[2].ReceiveC(), id: 3}
+	pw := &producerWorker{outC: mbx.SendC()}
+	cw1 := &consumerWorker{inC: mbxx[0].ReceiveC(), id: 1}
+	cw2 := &consumerWorker{inC: mbxx[1].ReceiveC(), id: 2}
+	cw3 := &consumerWorker{inC: mbxx[2].ReceiveC(), id: 3}
 
 	a := actor.Combine(
-		mailbox,
-		// Note: We need to start/stop Mailboxes created by FanOut
-		actor.FromMailboxes(mm),
+		mbx,
+		actor.FromMailboxes(mbxx),
 		actor.New(pw),
 		actor.New(cw1),
 		actor.New(cw2),
