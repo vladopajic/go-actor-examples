@@ -6,32 +6,31 @@ import (
 	"github.com/vladopajic/go-actor-examples/lib"
 )
 
-// This program will demonstrate how to create actors for producer-consumer use case, where
-// producer will create incremented number on every 1 second interval and
-// consumer will print whaterver number it receives
+// This program will demonstrate how to create actors for producer-consumer use case.
+// Producer will create incremented number on every 1 second interval and
+// consumer will print whatever number it receives.
 func Run() {
 	mailbox := actor.NewMailbox[int]()
 
-	// Producer and consumer workers are created with same mailbox
-	// so that producer worker can send messages directly to consumer worker
+	// Produce and consume workers are created with same mailbox
+	// so that produce worker can send messages directly to consume worker
 	pw := &producerWorker{outC: mailbox.SendC()}
 	cw1 := &consumerWorker{inC: mailbox.ReceiveC(), id: 1}
+
+	// Note: Example creates two consumers for the sake of demonstration
+	// since having one or more consumers will produce the same result.
+	// Message on stdout will be written by first consumer that reads from mailbox.
 	cw2 := &consumerWorker{inC: mailbox.ReceiveC(), id: 2}
 
-	// Create actors using these workers and combine them to singe Actor
+	// Create actors using these workers and combine them to singe actor
 	a := actor.Combine(
 		mailbox,
 		actor.New(pw),
-
-		// Note: We don't need two consumer actors, but we create them anyway
-		// for the sake of demonstration since having one or more consumers
-		// will produce the same result. Message on stdout will be written by
-		// first consumer that reads from mailbox.
 		actor.New(cw1),
 		actor.New(cw2),
 	)
 
-	// Finally we start all actors at once
+	// Finally all actors are started and stopped at once
 	a.Start()
 	defer a.Stop()
 
