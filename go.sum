@@ -3,7 +3,7 @@ github.com/gammazero/deque v0.2.0 h1:SkieyNB4bg2/uZZLxvya0Pq6diUlwx7m2TeT7GAIWaA
 github.com/gammazero/deque v0.2.0/go.mod h1:LFroj8x4cMYCukHJDbxFCkT+r9AndaJnFMuZDV34tuU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
-github.com/vladopajic/go-actor v0.6.0 h1:bKTOm8VqpZna7epwOEjL69kVFEPKwmlykso4OeHYlu4=
-github.com/vladopajic/go-actor v0.6.0/go.mod h1:J742Ecxg4GfOfkY/E8Ye+xeFcXBMTuNUVlm2ZLOwDTc=
+github.com/vladopajic/go-actor v0.7.0 h1:1G3LQb8iZOzpHRVD/flsOLbd8eZONKyQgLsrO+TrDaA=
+github.com/vladopajic/go-actor v0.7.0/go.mod h1:J742Ecxg4GfOfkY/E8Ye+xeFcXBMTuNUVlm2ZLOwDTc=
 go.uber.org/goleak v1.1.12 h1:gZAh5/EyT/HQwlpkCy6wTpqfH9H8Lz8zbm3dZh+OyzA=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
