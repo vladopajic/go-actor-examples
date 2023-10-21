@@ -8,13 +8,13 @@ import (
 
 // consumerWorker will consume numbers received on inC channel
 type consumerWorker struct {
-	inC <-chan int
-	id  int
+	inMbx actor.MailboxReceiver[int]
+	id    int
 }
 
 func (w *consumerWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	select {
-	case num := <-w.inC:
+	case num := <-w.inMbx.ReceiveC():
 		fmt.Printf("consumed %d \t(worker %d)\n", num, w.id)
 
 		return actor.WorkerContinue

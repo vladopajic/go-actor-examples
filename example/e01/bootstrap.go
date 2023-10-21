@@ -14,13 +14,13 @@ func Run() {
 
 	// Produce and consume workers are created with same mailbox
 	// so that produce worker can send messages directly to consume worker
-	pw := &producerWorker{outC: mailbox.SendC()}
-	cw1 := &consumerWorker{inC: mailbox.ReceiveC(), id: 1}
+	pw := &producerWorker{outMbx: mailbox}
+	cw1 := &consumerWorker{inMbx: mailbox, id: 1}
 
 	// Note: Example creates two consumers for the sake of demonstration
 	// since having one or more consumers will produce the same result.
 	// Message on stdout will be written by first consumer that reads from mailbox.
-	cw2 := &consumerWorker{inC: mailbox.ReceiveC(), id: 2}
+	cw2 := &consumerWorker{inMbx: mailbox, id: 2}
 
 	// Create actors using these workers and combine them to singe actor
 	a := actor.Combine(

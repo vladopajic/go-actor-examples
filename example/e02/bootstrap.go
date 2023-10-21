@@ -16,10 +16,10 @@ func Run() {
 	// everything received by mbx will be forwarded to all mailboxes in mbxx
 	actor.FanOut(mbx.ReceiveC(), mbxx)
 
-	pw := &producerWorker{outC: mbx.SendC()}
-	cw1 := &consumerWorker{inC: mbxx[0].ReceiveC(), id: 1}
-	cw2 := &consumerWorker{inC: mbxx[1].ReceiveC(), id: 2}
-	cw3 := &consumerWorker{inC: mbxx[2].ReceiveC(), id: 3}
+	pw := &producerWorker{outMbx: mbx}
+	cw1 := &consumerWorker{inMbx: mbxx[0], id: 1}
+	cw2 := &consumerWorker{inMbx: mbxx[1], id: 2}
+	cw3 := &consumerWorker{inMbx: mbxx[2], id: 3}
 
 	a := actor.Combine(
 		mbx,

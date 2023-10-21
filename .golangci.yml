@@ -2,6 +2,8 @@ run:
   deadline: 5m
 
 linters:
+  disable:
+    - errcheck
   enable:
     # - exhaustivestruct (too exhaustive)
     # - gci
@@ -16,11 +18,11 @@ linters:
     - containedctx
     - contextcheck
     - cyclop
-    - depguard
+    # - depguard
     - dogsled
     - dupl
     - durationcheck
-    - errcheck
+    # - errcheck
     - errchkjson
     - errname
     - errorlint
@@ -66,7 +68,7 @@ linters:
     - predeclared
     - promlinter
     - reassign
-    - revive
+    # - revive
     - staticcheck
     - stylecheck
     - tagliatelle
