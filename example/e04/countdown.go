@@ -7,6 +7,11 @@ import (
 	"github.com/vladopajic/go-actor/actor"
 )
 
+var (
+	_ actor.StartableWorker = (*countdownWorker)(nil)
+	_ actor.StoppableWorker = (*countdownWorker)(nil)
+)
+
 // NewCountdownActor creates new actor for launch pad countdowns.
 func NewCountdownActor(launchReadySigC chan struct{}) actor.Actor {
 	w := &countdownWorker{
@@ -14,11 +19,17 @@ func NewCountdownActor(launchReadySigC chan struct{}) actor.Actor {
 		secondsCount:    3,
 	}
 
-	return actor.New(
-		w,
-		actor.OptOnStart(w.onStart),
-		actor.OptOnStop(w.onStop),
-	)
+	// Note: in example 3, onStop and onStart options were provided here:
+	//
+	// return actor.New(w,
+	// 	actor.OptOnStart(w.onStart),
+	// 	actor.OptOnStop(w.onStop),
+	// )
+	//
+	// Instead of providing options we can implement OnStart and OnStop
+	// function in worker.
+
+	return actor.New(w)
 }
 
 type countdownWorker struct {
@@ -45,10 +56,10 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	}
 }
 
-func (w *countdownWorker) onStart(c actor.Context) {
-	fmt.Printf("countdown started\n")
+func (w *countdownWorker) OnStart(c actor.Context) {
+	fmt.Println("countdown started")
 }
 
-func (w *countdownWorker) onStop() {
-	fmt.Printf("countdown ended\n")
+func (w *countdownWorker) OnStop() {
+	fmt.Println("countdown ended")
 }

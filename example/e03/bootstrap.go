@@ -20,5 +20,5 @@ func Run() {
 }
 
 func launchRocket() {
-	fmt.Printf("Launching rocket!\n")
+	fmt.Println("Launching rocket!")
 }

@@ -14,8 +14,7 @@ func NewCountdownActor(launchReadySigC chan struct{}) actor.Actor {
 		secondsCount:    3,
 	}
 
-	return actor.New(
-		w,
+	return actor.New(w,
 		actor.OptOnStart(w.onStart),
 		actor.OptOnStop(w.onStop),
 	)
@@ -40,9 +39,9 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 }
 
 func (w *countdownWorker) onStart(c actor.Context) {
-	fmt.Printf("countdown started\n")
+	fmt.Println("countdown started")
 }
 
 func (w *countdownWorker) onStop() {
-	fmt.Printf("countdown ended\n")
+	fmt.Println("countdown ended")
 }

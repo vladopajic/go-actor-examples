@@ -1,10 +1,11 @@
 package e04
 
 import (
+	"fmt"
 	"time"
 )
 
-// This program shows improved example #02
+// This program shows improved example #03
 func Run() {
 	launchReadySigC := make(chan struct{})
 
@@ -16,7 +17,11 @@ func Run() {
 	time.Sleep(time.Second * 2)
 	a.Stop()
 
-	// This will halt program execution because caundown was stopped
+	// This will timeout program execution because countdown was stopped
 	// (there are no live goroutines which can write to this channel)
-	<-launchReadySigC
+	select {
+	case <-launchReadySigC:
+	case <-time.After(time.Second * 5):
+		fmt.Println("timeout")
+	}
 }
