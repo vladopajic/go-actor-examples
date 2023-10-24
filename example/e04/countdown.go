@@ -39,6 +39,9 @@ type countdownWorker struct {
 
 func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	select {
+	case <-c.Done():
+		return actor.WorkerEnd
+
 	case <-time.After(time.Second):
 		fmt.Printf("%d\n", w.secondsCount)
 
@@ -50,9 +53,6 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 		}
 
 		return actor.WorkerContinue
-
-	case <-c.Done():
-		return actor.WorkerEnd
 	}
 }
 

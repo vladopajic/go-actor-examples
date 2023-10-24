@@ -12,7 +12,7 @@ func Run() {
 
 	a.Start()
 	// Note: It's good practice to stop actors, but in this cases
-	// worker will end after countdown is finished
+	// worker will end after countdown is finished - Stop() will have no effect
 	defer a.Stop()
 
 	<-launchReadySigC

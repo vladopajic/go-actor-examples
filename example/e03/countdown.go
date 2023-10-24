@@ -27,7 +27,7 @@ type countdownWorker struct {
 
 func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	// Note: it's bad practice to implement workers that are not
-	// responding on c.EndWorkC() signal. See example #04
+	// responding on c.Done() signal. See example #04
 	for i := w.secondsCount; i > 0; i-- {
 		fmt.Printf("%d\n", i)
 		time.Sleep(time.Second)
