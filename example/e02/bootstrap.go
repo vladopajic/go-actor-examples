@@ -28,7 +28,7 @@ func Run() {
 		actor.New(cw1),
 		actor.New(cw2),
 		actor.New(cw3),
-	)
+	).Build()
 
 	a.Start()
 	defer a.Stop()
