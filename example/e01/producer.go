@@ -14,13 +14,13 @@ type producerWorker struct {
 
 func (w *producerWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	select {
+	case <-c.Done():
+		return actor.WorkerEnd
+
 	case <-time.After(time.Second):
 		w.num++
 		w.outMbx.Send(c, w.num)
 
 		return actor.WorkerContinue
-
-	case <-c.Done():
-		return actor.WorkerEnd
 	}
 }

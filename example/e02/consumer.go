@@ -14,12 +14,12 @@ type consumerWorker struct {
 
 func (w *consumerWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	select {
+	case <-c.Done():
+		return actor.WorkerEnd
+
 	case num := <-w.inMbx.ReceiveC():
 		fmt.Printf("consumed %d \t(worker %d)\n", num, w.id)
 
 		return actor.WorkerContinue
-
-	case <-c.Done():
-		return actor.WorkerEnd
 	}
 }

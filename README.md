@@ -4,7 +4,7 @@
 [![lint](https://github.com/vladopajic/go-actor-examples/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/vladopajic/go-actor-examples/actions/workflows/lint.yml)
 
 
-This repostory hosts various examples for [`go-actor`](https://github.com/vladopajic/go-actor).
+This repository hosts various examples for [`go-actor`](https://github.com/vladopajic/go-actor).
 
 ## Usage
 
