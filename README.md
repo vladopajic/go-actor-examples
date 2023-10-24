@@ -6,8 +6,11 @@
 
 This repository hosts various examples for [`go-actor`](https://github.com/vladopajic/go-actor).
 
-## Usage
+## How to use examples
 
+To make the most out of this read each example package found in [`/example`](/example/) directory. Every example has `bootstrap.go` that sets up logic and explains idea behind this example. It is also advised to read other source files in example directory (package).
+
+Every example cloud be executed with following command:
 ```
 // make run {example number}
 
