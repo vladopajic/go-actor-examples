@@ -33,7 +33,7 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 		time.Sleep(time.Second)
 	}
 
-	w.launchReadySigC <- struct{}{}
+	close(w.launchReadySigC)
 
 	return actor.WorkerEnd
 }

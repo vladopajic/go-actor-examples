@@ -48,7 +48,7 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 		w.secondsCount--
 
 		if w.secondsCount == 0 {
-			w.launchReadySigC <- struct{}{}
+			close(w.launchReadySigC)
 			return actor.WorkerEnd
 		}
 
