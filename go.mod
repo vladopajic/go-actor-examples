@@ -2,7 +2,7 @@ module github.com/vladopajic/go-actor-examples
 
 go 1.21
 
-require github.com/vladopajic/go-actor v0.8.1
+require github.com/vladopajic/go-actor v0.8.2
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
