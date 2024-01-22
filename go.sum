@@ -6,8 +6,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
-github.com/vladopajic/go-actor v0.8.3 h1:ZBjdUk0EEXyNLfuTsHywRUK4p7KTMIcPo+ZFU1Xub2o=
-github.com/vladopajic/go-actor v0.8.3/go.mod h1:jNnkaE/fwmxk5M0Xnr/ymGm+drix7LaW2xmMFbY5/co=
+github.com/vladopajic/go-actor v0.8.4 h1:Bl7bSUn6J6xshPKnqV35laLYJPa5/o4d3hTaVCd1Rac=
+github.com/vladopajic/go-actor v0.8.4/go.mod h1:jNnkaE/fwmxk5M0Xnr/ymGm+drix7LaW2xmMFbY5/co=
 go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
 go.uber.org/goleak v1.3.0/go.mod h1:CoHD4mav9JJNrW/WLlf7HGZPjdw8EucARQHekz1X6bE=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
