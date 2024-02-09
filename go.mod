@@ -1,6 +1,6 @@
 module github.com/vladopajic/go-actor-examples
 
-go 1.21
+go 1.22
 
 require github.com/vladopajic/go-actor v0.8.4
 
