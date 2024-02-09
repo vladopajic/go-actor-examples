@@ -1,7 +1,6 @@
 package e04
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -17,11 +16,8 @@ func Run() {
 	time.Sleep(time.Second * 2)
 	a.Stop()
 
-	// This will timeout program execution because countdown was stopped
-	// (there are no live goroutines which can write to this channel)
-	select {
-	case <-launchReadySigC:
-	case <-time.After(time.Second * 5):
-		fmt.Println("timeout")
-	}
+	// This program will wait for launchReadySigC but it will never
+	// happen because coundown was stopped. Program will exit anyway
+	// because all goroutines are asleep.
+	<-launchReadySigC
 }
