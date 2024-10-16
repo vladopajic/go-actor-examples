@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// This program shows improved example #03
+// This example shows improved Countdown actor from example #03.
 func Run() {
 	launchReadySigC := make(chan struct{})
 
@@ -17,7 +17,7 @@ func Run() {
 	a.Stop()
 
 	// This program will wait for launchReadySigC but it will never
-	// happen because coundown was stopped. Program will exit anyway
+	// happen because countdown was stopped. Program will exit anyway
 	// because all goroutines are asleep.
 	<-launchReadySigC
 }
