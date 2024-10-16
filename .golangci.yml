@@ -5,29 +5,22 @@ linters:
   disable:
     - errcheck
   enable:
-    # - exhaustivestruct (too exhaustive)
-    # - gci
-    # - godot (too nit picking)
-    # - ireturn  (we like when function returns interface)
-    # - varnamelen  (we can handle this in code review step)
-    # - forbidigo
     - asasalint
     - asciicheck
     - bidichk
     - bodyclose
+    - copyloopvar
     - containedctx
     - contextcheck
     - cyclop
-    # - depguard
     - dogsled
     - dupl
     - durationcheck
-    # - errcheck
+    - err113
     - errchkjson
     - errname
     - errorlint
     - exhaustive
-    - exportloopref
     - forcetypeassert
     - funlen
     - gochecknoglobals
@@ -37,12 +30,10 @@ linters:
     - gocritic
     - gocyclo
     - godox
-    - goerr113
     - gofmt
     - gofumpt
     - goheader
     - goimports
-    - gomnd
     - gomoddirectives
     - gomodguard
     - goprintffuncname
@@ -68,7 +59,7 @@ linters:
     - predeclared
     - promlinter
     - reassign
-    # - revive
+    - revive
     - staticcheck
     - stylecheck
     - tagliatelle

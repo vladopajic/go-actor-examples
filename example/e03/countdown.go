@@ -25,7 +25,7 @@ type countdownWorker struct {
 	secondsCount    int
 }
 
-func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
+func (w *countdownWorker) DoWork(_ actor.Context) actor.WorkerStatus {
 	// Note: it's bad practice to implement workers that are not
 	// responding on c.Done() signal. See example #04
 	for i := w.secondsCount; i > 0; i-- {
@@ -38,7 +38,7 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	return actor.WorkerEnd
 }
 
-func (w *countdownWorker) onStart(c actor.Context) {
+func (w *countdownWorker) onStart(_ actor.Context) {
 	fmt.Println("countdown started")
 }
 

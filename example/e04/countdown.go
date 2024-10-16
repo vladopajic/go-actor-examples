@@ -56,7 +56,7 @@ func (w *countdownWorker) DoWork(c actor.Context) actor.WorkerStatus {
 	}
 }
 
-func (w *countdownWorker) OnStart(c actor.Context) {
+func (w *countdownWorker) OnStart(_ actor.Context) {
 	fmt.Println("countdown started")
 }
 
