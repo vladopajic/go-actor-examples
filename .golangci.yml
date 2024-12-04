@@ -81,7 +81,6 @@ linters-settings:
   misspell:
     locale: US
   govet:
-    check-shadowing: true
     enable-all: true
     disable:
       - fieldalignment
