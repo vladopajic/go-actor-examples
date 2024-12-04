@@ -8,11 +8,13 @@ This repository hosts various examples for [`go-actor`](https://github.com/vlado
 
 # How to use examples
 
-To make the most out of this read each example package found in [`/example`](/example/) directory. Every example has `bootstrap.go` that sets up logic and explains idea behind this example. It is also advised to read other source files in example directory (package).
+To make the most out of this, read each example package found in the [/example](/example/) directory. Every example has a bootstrap.go file that sets up the logic and explains the idea behind the example. It is also advised to read other source files in the example directory (package).
 
-Every example cloud be executed with following command:
-```
-// make run {example number}
+Each example can be executed with the following command:
+
+```bash
+# Use the following syntax to run a specific example:  
+make run {example number}
 
 make run 1
 ```
@@ -20,16 +22,16 @@ make run 1
 
 | Example   | Description |
 |-----------|------------|
-|  1 | demonstrate how to create actors for producer-consumer use case |
-|  2 | demonstrate how to fan-out Mailbox (example with multiple consumers)  |
-|  3 | demonstrate how to create actors with options  |
-|  4 | improved Countdown actor from example 3  |
-|  5 | demonstrates when producer-consumer case should be ended when some condition is meet |
-|  6 | example 5 introduced an issue (and a puzzle), that is fixed in this example |
-|  7 | small improvement of example 6  |
-|  8 | example when producer is much faster then consumer; new puzzle is introduced  |
-|  9 | example with solution to puzzle from example 9  |
-| 10 | demonstrate how to stop combined actor when first actor ends |
+|  1 | Demonstrates how to create actors for a producer-consumer use case. |
+|  2 | Demonstrates how to fan-out a mailbox (an example with multiple consumers).  |
+|  3 | Demonstrates how to create actors with options. |
+|  4 | An improved Countdown actor, building on example 3.  |
+|  5 | Demonstrates when a producer-consumer case should end based on a specific condition. |
+|  6 | Builds on example 5, fixing an introduced issue (and puzzle). |
+|  7 | A small improvement to example 6. |
+|  8 | Explores a scenario where the producer is much faster than the consumer; introduces a new puzzle.  |
+|  9 | Provides the solution to the puzzle introduced in example 8.  |
+| 10 | Demonstrates how to stop a combined actor when the first actor ends. |
 
 
 ## Contribution
