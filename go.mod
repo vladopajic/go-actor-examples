@@ -4,6 +4,6 @@ go 1.23
 
 toolchain go1.23.3
 
-require github.com/vladopajic/go-actor v0.9.1
+require github.com/vladopajic/go-actor v0.9.2
 
-require github.com/gammazero/deque v0.2.1 // indirect
+require github.com/gammazero/deque v1.0.0 // indirect
