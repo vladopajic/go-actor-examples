@@ -23,7 +23,6 @@ linters:
     - exhaustive
     - forcetypeassert
     - funlen
-    - gochecknoglobals
     - gochecknoinits
     - gocognit
     - goconst
@@ -37,7 +36,6 @@ linters:
     - gomoddirectives
     - gomodguard
     - goprintffuncname
-    - gosec
     - gosimple
     - govet
     - importas
@@ -59,11 +57,9 @@ linters:
     - predeclared
     - promlinter
     - reassign
-    - revive
     - staticcheck
     - stylecheck
     - tagliatelle
-    - tenv
     - testpackage
     - thelper
     - tparallel
@@ -100,12 +96,3 @@ issues:
       linters:
         - funlen      ## Function lenght is okay due to many tests cases
         - wrapcheck   ## No need to check wrapping errors in tests
-
-    - path: _export_test\.go
-      linters:
-        - revive      ## Disabling linter because we intentionally want to use unexpored types in tests
-
-      # Linters excluded from examples
-    - path: example/*
-      linters:
-        - gomnd

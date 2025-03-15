@@ -32,6 +32,7 @@ make run 1
 |  8 | Explores a scenario where the producer is much faster than the consumer; introduces a new puzzle.  |
 |  9 | Provides the solution to the puzzle introduced in example 8.  |
 | 10 | Demonstrates how to stop a combined actor when the first actor ends. |
+| 11 | Create a custom actor (HTTPService) and seamlessly compose it with other actors. |
 
 
 ## Contribution

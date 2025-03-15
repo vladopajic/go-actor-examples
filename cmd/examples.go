@@ -11,6 +11,7 @@ import (
 	"github.com/vladopajic/go-actor-examples/example/e08"
 	"github.com/vladopajic/go-actor-examples/example/e09"
 	"github.com/vladopajic/go-actor-examples/example/e10"
+	"github.com/vladopajic/go-actor-examples/example/e11"
 )
 
 func examples() map[int]func() {
@@ -25,5 +26,6 @@ func examples() map[int]func() {
 		8:  e08.Run,
 		9:  e09.Run,
 		10: e10.Run,
+		11: e11.Run,
 	}
 }
