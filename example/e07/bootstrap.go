@@ -10,7 +10,7 @@ const endWorkAtStep = 3
 
 // This example is improvement of example 6.
 // Here consumer will be ended when there is nothing more to be consumed.
-// This is achieved by stopping mailbox when producer is sopped.
+// This is achieved by stopping mailbox when producer is stopped.
 //
 // See change in consumer.go.
 func Run() {

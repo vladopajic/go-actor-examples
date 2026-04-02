@@ -22,7 +22,7 @@ func (w *consumerWorker) DoWork(c actor.Context) actor.WorkerStatus {
 		}
 
 		if num == 3 {
-			// consumer is vary slow to process message 3
+			// consumer is very slow to process message 3
 			time.Sleep(time.Second)
 		}
 

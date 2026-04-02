@@ -14,7 +14,7 @@ func Run() {
 		actor.New(&solverWorker{searchedNumber: 42}),
 		actor.New(&solverWorker{searchedNumber: 10000}), // this solver will never find solution
 	).WithOptions(
-		actor.OptStopTogether(), // this option will stop all actors when any of actor is sopped
+		actor.OptStopTogether(), // this option will stop all actors when any of actor is stopped
 		actor.OptOnStopCombined(func() { close(finishedC) }),
 	).Build()
 

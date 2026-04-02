@@ -8,7 +8,7 @@ import (
 func main() {
 	var exampleNo int
 	//nolint:lll // usage description text in one line
-	flag.IntVar(&exampleNo, "example", 0, fmt.Sprintf("Example number to be started. Expacted value in range { 1 ... %d }", len(examples())))
+	flag.IntVar(&exampleNo, "example", 0, fmt.Sprintf("Example number to be started. Expected value in range { 1 ... %d }", len(examples())))
 	flag.Parse()
 
 	if exampleNo <= 0 {

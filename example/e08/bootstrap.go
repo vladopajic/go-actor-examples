@@ -8,7 +8,7 @@ import (
 
 const endWorkAtStep = 100
 
-// But what if producer finishes much faster then consumer?
+// But what if producer finishes much faster than consumer?
 // Note there is just 64 messages in stdout, but we wanted to end at step 100.
 //
 // Solution for this puzzle in next example. This puzzle is bit harder as it requires
