@@ -9,7 +9,7 @@ import (
 const endWorkAtStep = 100
 
 // Since mailbox is stopped after producer finishes, there will still be messages in queue,
-// but mailbox actor will not process them because it was sopped.
+// but mailbox actor will not process them because it was stopped.
 // To fix this mailbox actor should be active until there are messages in queue.
 func Run() {
 	finishedC := make(chan any)

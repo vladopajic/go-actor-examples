@@ -6,7 +6,7 @@ import (
 	"github.com/vladopajic/go-actor-examples/lib"
 )
 
-// This program will demonstrate how to fan-out Mailbox. Example is vary similar
+// This program will demonstrate how to fan-out Mailbox. Example is very similar
 // to previous except that this time we intentionally want to have single producer
 // that sends messages to many consumers.
 func Run() {
