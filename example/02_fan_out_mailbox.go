@@ -16,6 +16,14 @@ func init() {
 // Run02 demonstrates how to fan-out a mailbox. It is very similar to Run01,
 // except this time we intentionally want to have single producer that sends
 // messages to many consumers.
+//
+// Expected behavior:
+//   - Runs until interrupted with Ctrl+C.
+//   - Each produced number is printed by every consumer.
+//
+// Watch for:
+//   - Fan-out uses one input mailbox and separate output mailboxes so all
+//     consumers can observe the same message stream.
 func Run02() {
 	mbx := actor.NewMailbox[int]()
 	mbxx := actor.NewMailboxes[int](3)

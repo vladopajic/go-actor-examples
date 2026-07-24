@@ -22,6 +22,14 @@ func init() {
 //
 // To fix this, combined actor is created only using consumer and producer.
 // Therefore `OnStop` will be called because at one point both actors will be stopped.
+//
+// Expected behavior:
+//   - Producer and consumer stop after three messages.
+//   - "example finished" is printed.
+//
+// Watch for:
+//   - The outer combined actor still owns the mailbox, but finishedC is closed
+//     by the inner producer-consumer group.
 func Run06() {
 	finishedC := make(chan any)
 

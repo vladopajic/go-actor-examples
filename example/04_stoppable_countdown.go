@@ -17,6 +17,14 @@ var (
 )
 
 // Run04 shows improved Countdown actor from Run03.
+//
+// Expected behavior:
+//   - Countdown starts, the actor is stopped before launch, and launchReadySigC
+//     is never closed.
+//
+// Watch for:
+//   - The final receive demonstrates that launch never becomes ready after
+//     cancellation. The program exits because no goroutine can make progress.
 func Run04() {
 	launchReadySigC := make(chan struct{})
 
@@ -31,6 +39,9 @@ func Run04() {
 	// This program will wait for launchReadySigC but it will never
 	// happen because countdown was stopped. Program will exit anyway
 	// because all goroutines are asleep.
+	//
+	// This is intentional for the example. In application code, prefer waiting
+	// on a real completion signal or returning after Stop.
 	<-launchReadySigC
 }
 

@@ -16,6 +16,13 @@ func init() {
 // Since mailbox is stopped after producer finishes, there will still be messages
 // in queue, but mailbox actor will not process them because it was stopped.
 // To fix this mailbox actor should be active until there are messages in queue.
+//
+// Expected behavior:
+//   - All 100 messages are consumed before the example finishes.
+//
+// Watch for:
+//   - Stop means "do not accept more work", while this option lets already
+//     queued work continue to receivers.
 func Run09() {
 	finishedC := make(chan any)
 

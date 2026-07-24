@@ -22,6 +22,14 @@ func init() {
 // compose it with other actors.
 //
 // After running example you can run `curl http://localhost:9988` to see message!
+//
+// Expected behavior:
+//   - Starts an HTTP server and returns the current actor-owned message for
+//     each request.
+//
+// Watch for:
+//   - Message() sends a request to the actor worker. Calls made after the actor
+//     is stopped can block unless the caller also coordinates shutdown.
 func Run11() {
 	messageActor := newMessageActor()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
@@ -103,6 +111,8 @@ type messageWorker struct {
 
 func (w *messageWorker) Message() string {
 	req := make(chan string, 1)
+	// This sends a request into the actor-owned event loop. In production code,
+	// use a context-aware API if callers may race with actor shutdown.
 	w.reqC <- req
 
 	return <-req

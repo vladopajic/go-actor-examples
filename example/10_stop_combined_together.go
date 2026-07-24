@@ -13,6 +13,14 @@ func init() {
 }
 
 // Run10 shows how to stop all combined actors as soon as any one of them stops.
+//
+// Expected behavior:
+//   - Dots are printed while solvers search.
+//   - The whole group stops after the first solver finds the target number.
+//
+// Watch for:
+//   - The worker that searches for 10000 is intentionally impossible because
+//     generated values are below 200. It exists to show group cancellation.
 func Run10() {
 	finishedC := make(chan any)
 

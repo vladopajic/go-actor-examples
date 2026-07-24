@@ -18,6 +18,14 @@ func init() {
 //
 // This example will signal consumer and producer actors to end. And after they both
 // end we will terminate program.
+//
+// Expected behavior:
+//   - This example intentionally does not finish cleanly.
+//   - "example finished" is not printed.
+//
+// Watch for:
+//   - The mailbox remains part of the combined actor after producer and consumer
+//     end. Run06 shows one way to structure the lifecycle correctly.
 func Run05() {
 	finishedC := make(chan any)
 

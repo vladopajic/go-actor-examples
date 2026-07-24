@@ -12,6 +12,13 @@ func init() {
 }
 
 // Run03 demonstrates how to create actors with options.
+//
+// Expected behavior:
+//   - Prints a countdown, then prints the launch message.
+//
+// Watch for:
+//   - DoWork intentionally does not watch c.Done here. Run04 shows why
+//     workers should normally support cancellation.
 func Run03() {
 	launchReadySigC := make(chan struct{})
 

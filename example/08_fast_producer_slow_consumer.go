@@ -16,6 +16,13 @@ func init() {
 //
 // Solution for this puzzle is in Run09. This puzzle is bit harder as it requires
 // deep understanding of how actor.Mailbox is implemented.
+//
+// Expected behavior:
+//   - This example intentionally consumes fewer than 100 messages.
+//
+// Watch for:
+//   - The slow handling of message 3 lets the producer get far ahead. When the
+//     producer stops the mailbox, queued messages may not all be delivered.
 func Run08() {
 	finishedC := make(chan any)
 

@@ -13,6 +13,13 @@ func init() {
 
 // Run07 improves Run06. Here consumer will be ended when there is nothing more
 // to be consumed. This is achieved by stopping mailbox when producer is stopped.
+//
+// Expected behavior:
+//   - Producer sends three messages, stops the mailbox, and the consumer exits.
+//
+// Watch for:
+//   - The consumer checks the open flag from ReceiveC. That is what lets it
+//     distinguish a value from a closed mailbox.
 func Run07() {
 	finishedC := make(chan any)
 

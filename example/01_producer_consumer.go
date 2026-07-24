@@ -16,6 +16,14 @@ func init() {
 // Run01 demonstrates how to create actors for a producer-consumer use case.
 // Producer will create incremented number on every 1 second interval and
 // consumer will print whatever number it receives.
+//
+// Expected behavior:
+//   - Runs until interrupted with Ctrl+C.
+//   - Every number is consumed by one of the consumers.
+//
+// Watch for:
+//   - This is work sharing, not broadcasting. With one shared mailbox, each
+//     message is received by only one consumer.
 func Run01() {
 	mailbox := actor.NewMailbox[int]()
 
