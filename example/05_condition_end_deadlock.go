@@ -11,8 +11,6 @@ func init() {
 	register(5, "condition_end_deadlock", Run05)
 }
 
-const conditionEndDeadlockStep = 3
-
 // Run05 shows how to end producer and consumer actors when a condition is reached.
 // Run01 and Run02 demonstrated producer and consumer working indefinitely, but
 // sometimes we want to end program when a condition is reached - in this example
@@ -23,11 +21,13 @@ const conditionEndDeadlockStep = 3
 func Run05() {
 	finishedC := make(chan any)
 
+	const endAtStep = 3
+
 	mbx := actor.NewMailbox[int]()
 
 	a := actor.Combine(
-		actor.New(&conditionEndDeadlockProducer{outMbx: mbx}),
-		actor.New(&conditionEndDeadlockConsumer{inMbx: mbx}),
+		actor.New(&conditionEndDeadlockProducer{outMbx: mbx, endAtStep: endAtStep}),
+		actor.New(&conditionEndDeadlockConsumer{inMbx: mbx, endAtStep: endAtStep}),
 		mbx,
 	).WithOptions(
 		// Add function to be executed before all actors are started.
@@ -51,8 +51,9 @@ func Run05() {
 }
 
 type conditionEndDeadlockProducer struct {
-	outMbx actor.MailboxSender[int]
-	num    int
+	outMbx    actor.MailboxSender[int]
+	num       int
+	endAtStep int
 }
 
 func (w *conditionEndDeadlockProducer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -62,9 +63,9 @@ func (w *conditionEndDeadlockProducer) DoWork(c actor.Context) actor.WorkerStatu
 
 	case <-time.After(time.Second):
 		w.num++
-		w.outMbx.Send(c, w.num)
+		w.outMbx.Send(c, w.num) //nolint:errcheck // This example assumes the mailbox will never stop before this worker.
 
-		if w.num == conditionEndDeadlockStep {
+		if w.num == w.endAtStep {
 			return actor.WorkerEnd
 		}
 
@@ -73,7 +74,8 @@ func (w *conditionEndDeadlockProducer) DoWork(c actor.Context) actor.WorkerStatu
 }
 
 type conditionEndDeadlockConsumer struct {
-	inMbx actor.MailboxReceiver[int]
+	inMbx     actor.MailboxReceiver[int]
+	endAtStep int
 }
 
 func (w *conditionEndDeadlockConsumer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -84,7 +86,7 @@ func (w *conditionEndDeadlockConsumer) DoWork(c actor.Context) actor.WorkerStatu
 	case num := <-w.inMbx.ReceiveC():
 		fmt.Printf("consumed %d\n", num)
 
-		if num == conditionEndDeadlockStep {
+		if num == w.endAtStep {
 			return actor.WorkerEnd
 		}
 

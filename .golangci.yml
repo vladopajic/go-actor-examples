@@ -1,98 +1,194 @@
-run:
-  deadline: 5m
-
+version: "2"
 linters:
-  disable:
-    - errcheck
   enable:
     - asasalint
     - asciicheck
     - bidichk
     - bodyclose
-    - copyloopvar
     - containedctx
     - contextcheck
+    - copyloopvar
     - cyclop
+    - decorder
+    - depguard
     - dogsled
     - dupl
+    - dupword
     - durationcheck
     - err113
     - errchkjson
     - errname
     - errorlint
     - exhaustive
+    - exptostd
+    - fatcontext
     - forcetypeassert
     - funlen
+    - gocheckcompilerdirectives
+    - gochecknoglobals
     - gochecknoinits
+    - gochecksumtype
     - gocognit
     - goconst
     - gocritic
     - gocyclo
     - godox
-    - gofmt
-    - gofumpt
     - goheader
-    - goimports
     - gomoddirectives
     - gomodguard
     - goprintffuncname
-    - gosimple
-    - govet
+    - gosec
+    - grouper
+    - iface
     - importas
-    - ineffassign
+    - inamedparam
+    - interfacebloat
+    - intrange
     - lll
+    - loggercheck
     - maintidx
     - makezero
+    - mirror
     - misspell
     - nakedret
     - nestif
     - nilerr
+    - nilnesserr
     - nilnil
     - nlreturn
     - noctx
     - nolintlint
     - nonamedreturns
+    - nosprintfhostport
     - paralleltest
+    - perfsprint
     - prealloc
     - predeclared
     - promlinter
+    - protogetter
     - reassign
+    - recvcheck
+    - revive
+    - sloglint
+    - sqlclosecheck
     - staticcheck
-    - stylecheck
+    - tagalign
     - tagliatelle
+    - testifylint
     - testpackage
     - thelper
     - tparallel
-    - typecheck
     - unconvert
     - unparam
-    - unused
+    - usestdlibvars
+    - usetesting
+    - wastedassign
     - whitespace
     - wrapcheck
     - wsl
-
-linters-settings:
-  maintidx:
-    under: 40
-  misspell:
-    locale: US
-  govet:
-    enable-all: true
-    disable:
-      - fieldalignment
-  lll:
-    line-length: 120
-    tab-width: 1
-  nlreturn:
-    block-size: 5
-  goimports:
-    local-prefixes: github.com/vladopajic/go-actor-examples
-  wsl:
-    enforce-err-cuddling: true
-
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - funlen      ## Function lenght is okay due to many tests cases
-        - wrapcheck   ## No need to check wrapping errors in tests
+    - zerologlint
+  settings:
+    depguard:
+      rules:
+        main:
+          files:
+            - $all
+            - '!$test'
+          allow:
+            - $gostd
+            - github.com/rs/zerolog/log
+            - github.com/vladopajic/go-actor-examples
+            - github.com/vladopajic/go-actor/actor
+        test:
+          files:
+            - $test
+          allow:
+            - $gostd
+    dupl:
+      threshold: 120
+    errcheck:
+      disable-default-exclusions: true
+      check-blank: true
+    errchkjson:
+      report-no-exported: true
+    funlen:
+      ignore-comments: true
+    gocognit:
+      min-complexity: 20
+    goconst:
+      numbers: true
+    gocyclo:
+      min-complexity: 20
+    govet:
+      disable:
+        - fieldalignment
+      enable-all: true
+    grouper:
+      import-require-single-import: true
+    iface:
+      enable:
+        - identical
+        - unused
+    lll:
+      line-length: 120
+      tab-width: 1
+    maintidx:
+      under: 40
+    misspell:
+      locale: US
+    nlreturn:
+      block-size: 5
+    nolintlint:
+      require-explanation: true
+    tagliatelle:
+      case:
+        rules:
+          yaml: kebab
+        use-field-name: true
+    testifylint:
+      enable-all: true
+    unparam:
+      check-exported: true
+    wsl:
+      force-err-cuddling: true
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - funlen          ## Function length is okay due to many tests cases
+          - wrapcheck       ## No need to check wrapping errors in tests
+        path: _test\.go
+      - linters:            ## Self-registration keeps each example runnable by name.
+          - gochecknoinits
+        path: ^example/[0-9]{2}_
+      - linters:            ## Examples intentionally print output and sleep to demonstrate behavior.
+          - forbidigo
+        path: ^example/
+      - linters:            ## Examples intentionally use concrete numbers to keep demos readable.
+          - mnd
+        path: ^example/
+      - linters:            ## Examples intentionally repeat similar code while showing small behavior changes.
+          - dupl
+        path: ^example/
+      - linters:            ## Example package registries and demo messages are intentional globals.
+          - gochecknoglobals
+        path: ^example/
+      - linters:            ## Registry internals are intentionally tested from the same package.
+          - testpackage
+        path: ^example/registry_test\.go
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/vladopajic/go-actor-examples
+  exclusions:
+    generated: lax

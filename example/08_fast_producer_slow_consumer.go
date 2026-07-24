@@ -11,8 +11,6 @@ func init() {
 	register(8, "fast_producer_slow_consumer", Run08)
 }
 
-const fastProducerSlowConsumerStep = 100
-
 // Run08 explores what happens if producer finishes much faster than consumer.
 // Note there is just 64 messages in stdout, but we wanted to end at step 100.
 //
@@ -21,11 +19,13 @@ const fastProducerSlowConsumerStep = 100
 func Run08() {
 	finishedC := make(chan any)
 
+	const endAtStep = 100
+
 	mbx := actor.NewMailbox[int]()
 	mbx.Start()
 
 	a := actor.Combine(
-		actor.New(&fastProducerSlowConsumerProducer{outMbx: mbx}, actor.OptOnStop(mbx.Stop)),
+		actor.New(&fastProducerSlowConsumerProducer{outMbx: mbx, endAtStep: endAtStep}, actor.OptOnStop(mbx.Stop)),
 		actor.New(&fastProducerSlowConsumerConsumer{inMbx: mbx}),
 	).WithOptions(
 		actor.OptOnStartCombined(func(_ actor.Context) {
@@ -44,8 +44,9 @@ func Run08() {
 }
 
 type fastProducerSlowConsumerProducer struct {
-	outMbx actor.MailboxSender[int]
-	num    int
+	outMbx    actor.MailboxSender[int]
+	num       int
+	endAtStep int
 }
 
 func (w *fastProducerSlowConsumerProducer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -54,9 +55,9 @@ func (w *fastProducerSlowConsumerProducer) DoWork(c actor.Context) actor.WorkerS
 		return actor.WorkerEnd
 	default:
 		w.num++
-		w.outMbx.Send(c, w.num)
+		w.outMbx.Send(c, w.num) //nolint:errcheck // This example assumes the mailbox will never stop before this worker.
 
-		if w.num == fastProducerSlowConsumerStep {
+		if w.num == w.endAtStep {
 			return actor.WorkerEnd
 		}
 

@@ -9,8 +9,10 @@ import (
 
 type runFunc func()
 
-var registeredExamples = map[string]runFunc{}
-var exampleNames []string
+var (
+	registeredExamples = map[string]runFunc{}
+	exampleNames       []string
+)
 
 func register(number int, name string, fn runFunc) {
 	exampleNames = append(exampleNames, canonicalName(number, name))
@@ -67,12 +69,14 @@ func aliases(number int, name string) []string {
 
 	aliases := make([]string, 0, len(candidates))
 	seen := map[string]struct{}{}
+
 	for _, alias := range candidates {
 		if _, exists := seen[alias]; exists {
 			continue
 		}
 
 		seen[alias] = struct{}{}
+
 		aliases = append(aliases, alias)
 	}
 

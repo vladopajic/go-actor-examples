@@ -56,7 +56,12 @@ func (w *fanOutProducer) DoWork(c actor.Context) actor.WorkerStatus {
 
 	case <-time.After(time.Second):
 		w.num++
-		w.outMbx.Send(c, w.num)
+		if err := w.outMbx.Send(c, w.num); err != nil {
+			// The result of sending to a mailbox has to be processed.
+			// If the mailbox is stopped, this worker has no more useful work
+			// because its only output is that mailbox.
+			return actor.WorkerEnd
+		}
 
 		return actor.WorkerContinue
 	}

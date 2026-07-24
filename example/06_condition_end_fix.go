@@ -11,8 +11,6 @@ func init() {
 	register(6, "condition_end_fix", Run06)
 }
 
-const conditionEndFixStep = 3
-
 // Run06 fixes the problem introduced in Run05.
 //
 // Problem in Run05 is happening because combined actor was created using 3 actors:
@@ -27,11 +25,13 @@ const conditionEndFixStep = 3
 func Run06() {
 	finishedC := make(chan any)
 
+	const endAtStep = 3
+
 	mbx := actor.NewMailbox[int]()
 
 	cp := actor.Combine(
-		actor.New(&conditionEndFixProducer{outMbx: mbx}),
-		actor.New(&conditionEndFixConsumer{inMbx: mbx}),
+		actor.New(&conditionEndFixProducer{outMbx: mbx, endAtStep: endAtStep}),
+		actor.New(&conditionEndFixConsumer{inMbx: mbx, endAtStep: endAtStep}),
 	).WithOptions(
 		actor.OptOnStartCombined(func(_ actor.Context) {
 			fmt.Println("example started")
@@ -51,8 +51,9 @@ func Run06() {
 }
 
 type conditionEndFixProducer struct {
-	outMbx actor.MailboxSender[int]
-	num    int
+	outMbx    actor.MailboxSender[int]
+	num       int
+	endAtStep int
 }
 
 func (w *conditionEndFixProducer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -62,9 +63,9 @@ func (w *conditionEndFixProducer) DoWork(c actor.Context) actor.WorkerStatus {
 
 	case <-time.After(time.Second):
 		w.num++
-		w.outMbx.Send(c, w.num)
+		w.outMbx.Send(c, w.num) //nolint:errcheck // This example assumes the mailbox will never stop before this worker.
 
-		if w.num == conditionEndFixStep {
+		if w.num == w.endAtStep {
 			return actor.WorkerEnd
 		}
 
@@ -73,7 +74,8 @@ func (w *conditionEndFixProducer) DoWork(c actor.Context) actor.WorkerStatus {
 }
 
 type conditionEndFixConsumer struct {
-	inMbx actor.MailboxReceiver[int]
+	inMbx     actor.MailboxReceiver[int]
+	endAtStep int
 }
 
 func (w *conditionEndFixConsumer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -84,7 +86,7 @@ func (w *conditionEndFixConsumer) DoWork(c actor.Context) actor.WorkerStatus {
 	case num := <-w.inMbx.ReceiveC():
 		fmt.Printf("consumed %d\n", num)
 
-		if num == conditionEndFixStep {
+		if num == w.endAtStep {
 			return actor.WorkerEnd
 		}
 

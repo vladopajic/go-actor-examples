@@ -11,8 +11,6 @@ func init() {
 	register(9, "drain_mailbox_on_stop", Run09)
 }
 
-const drainMailboxOnStopStep = 100
-
 // Run09 solves the puzzle introduced in Run08.
 //
 // Since mailbox is stopped after producer finishes, there will still be messages
@@ -20,6 +18,8 @@ const drainMailboxOnStopStep = 100
 // To fix this mailbox actor should be active until there are messages in queue.
 func Run09() {
 	finishedC := make(chan any)
+
+	const endAtStep = 100
 
 	mbx := actor.NewMailbox[int](
 		// This option will end mailbox after it is stopped and queue is fully
@@ -29,7 +29,7 @@ func Run09() {
 	mbx.Start()
 
 	a := actor.Combine(
-		actor.New(&drainMailboxOnStopProducer{outMbx: mbx}, actor.OptOnStop(mbx.Stop)),
+		actor.New(&drainMailboxOnStopProducer{outMbx: mbx, endAtStep: endAtStep}, actor.OptOnStop(mbx.Stop)),
 		actor.New(&drainMailboxOnStopConsumer{inMbx: mbx}),
 	).WithOptions(
 		actor.OptOnStartCombined(func(_ actor.Context) {
@@ -48,8 +48,9 @@ func Run09() {
 }
 
 type drainMailboxOnStopProducer struct {
-	outMbx actor.MailboxSender[int]
-	num    int
+	outMbx    actor.MailboxSender[int]
+	num       int
+	endAtStep int
 }
 
 func (w *drainMailboxOnStopProducer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -60,9 +61,9 @@ func (w *drainMailboxOnStopProducer) DoWork(c actor.Context) actor.WorkerStatus 
 	}
 
 	w.num++
-	w.outMbx.Send(c, w.num)
+	w.outMbx.Send(c, w.num) //nolint:errcheck // This example assumes the mailbox will never stop before this worker.
 
-	if w.num == drainMailboxOnStopStep {
+	if w.num == w.endAtStep {
 		return actor.WorkerEnd
 	}
 

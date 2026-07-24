@@ -11,18 +11,18 @@ func init() {
 	register(7, "stop_mailbox_on_producer_stop", Run07)
 }
 
-const stopMailboxStep = 3
-
 // Run07 improves Run06. Here consumer will be ended when there is nothing more
 // to be consumed. This is achieved by stopping mailbox when producer is stopped.
 func Run07() {
 	finishedC := make(chan any)
 
+	const endAtStep = 3
+
 	mbx := actor.NewMailbox[int]()
 	mbx.Start()
 
 	a := actor.Combine(
-		actor.New(&stopMailboxProducer{outMbx: mbx}, actor.OptOnStop(mbx.Stop)),
+		actor.New(&stopMailboxProducer{outMbx: mbx, endAtStep: endAtStep}, actor.OptOnStop(mbx.Stop)),
 		actor.New(&stopMailboxConsumer{inMbx: mbx}),
 	).WithOptions(
 		actor.OptOnStartCombined(func(_ actor.Context) {
@@ -41,8 +41,9 @@ func Run07() {
 }
 
 type stopMailboxProducer struct {
-	outMbx actor.MailboxSender[int]
-	num    int
+	outMbx    actor.MailboxSender[int]
+	num       int
+	endAtStep int
 }
 
 func (w *stopMailboxProducer) DoWork(c actor.Context) actor.WorkerStatus {
@@ -52,9 +53,9 @@ func (w *stopMailboxProducer) DoWork(c actor.Context) actor.WorkerStatus {
 
 	case <-time.After(time.Second):
 		w.num++
-		w.outMbx.Send(c, w.num)
+		w.outMbx.Send(c, w.num) //nolint:errcheck // This example assumes the mailbox will never stop before this worker.
 
-		if w.num == stopMailboxStep {
+		if w.num == w.endAtStep {
 			return actor.WorkerEnd
 		}
 

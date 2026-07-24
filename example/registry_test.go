@@ -18,7 +18,6 @@ func TestRegisteredAliases(t *testing.T) {
 	}
 
 	for _, name := range tests {
-		name := name
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 

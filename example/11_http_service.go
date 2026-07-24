@@ -25,7 +25,7 @@ func init() {
 func Run11() {
 	messageActor := newMessageActor()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		fmt.Fprintln(w, messageActor.Messenger.Message())
+		fmt.Fprintln(w, messageActor.Message())
 	})
 	httpService := newHTTPService("localhost:9988", handler)
 
@@ -44,8 +44,9 @@ func newHTTPService(
 	handler http.Handler,
 ) *service {
 	httpServer := &http.Server{
-		Addr:    addr,
-		Handler: handler,
+		Addr:              addr,
+		Handler:           handler,
+		ReadHeaderTimeout: time.Second,
 	}
 
 	return &service{httpServer}
@@ -133,7 +134,7 @@ func (w *messageWorker) handleResponse(reqC chan string) {
 func (w *messageWorker) handleGenerateMessage() {
 	log.Info().Msg("generating new message")
 
-	w.currentMsg = msgs[rand.Intn(len(msgs))]
+	w.currentMsg = msgs[rand.Intn(len(msgs))] //nolint:gosec // Example uses non-security randomness.
 }
 
 var msgs = []string{
