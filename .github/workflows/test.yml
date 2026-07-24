@@ -13,3 +13,55 @@ jobs:
           go-version-file: go.mod
       - name: test (race detector)
         run: go test -timeout=30s -race -count=10 -failfast ./...
+      - name: smoke test examples
+        env:
+          FORCE_KILL_EXAMPLES: 04_stoppable_countdown 05_condition_end_deadlock
+        run: |
+          set -euo pipefail
+
+          bin="${RUNNER_TEMP}/go-actor-example-smoke"
+          go build -o "${bin}" ./cmd/...
+
+          mapfile -t examples < <(
+            find example -maxdepth 1 -type f -name '[0-9][0-9]_*.go' -printf '%f\n' |
+              sed 's/\.go$//' |
+              sort
+          )
+
+          if [[ "${#examples[@]}" -eq 0 ]]; then
+            echo "No examples discovered"
+            exit 1
+          fi
+
+          for example in "${examples[@]}"; do
+            echo "::group::smoke ${example}"
+
+            if [[ " ${FORCE_KILL_EXAMPLES} " == *" ${example} "* ]]; then
+              echo "Running ${example}; force-kill is expected if it reaches the smoke timeout"
+              set +e
+              timeout --signal=KILL 2s "${bin}" -example="${example}"
+              code="${?}"
+              set -e
+
+              if [[ "${code}" -ne 0 && "${code}" -ne 124 && "${code}" -ne 137 ]]; then
+                echo "${example} failed with unexpected exit code ${code}"
+                exit "${code}"
+              fi
+
+              echo "::endgroup::"
+              continue
+            fi
+
+            echo "Running ${example}; SIGTERM is expected if it reaches the smoke timeout"
+            set +e
+            timeout --kill-after=2s --signal=TERM 2s "${bin}" -example="${example}"
+            code="${?}"
+            set -e
+
+            if [[ "${code}" -ne 0 && "${code}" -ne 124 ]]; then
+              echo "${example} failed with unexpected exit code ${code}"
+              exit "${code}"
+            fi
+
+            echo "::endgroup::"
+          done

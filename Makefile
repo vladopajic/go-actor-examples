@@ -1,15 +1,15 @@
 GO ?= go
 GOBIN ?= $$($(GO) env GOPATH)/bin
 GOLANGCI_LINT ?= $(GOBIN)/golangci-lint
-GOLANGCI_LINT_VERSION ?= v1.60.3
+GOLANGCI_LINT_VERSION ?= v2.0.1 # LINT_VERSION: update version in other places
 
-.PHONY: get-golangcilint
-get-golangcilint:
+.PHONY: install-golangcilint
+install-golangcilint:
 	test -f $(GOLANGCI_LINT) || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$($(GO) env GOPATH)/bin $(GOLANGCI_LINT_VERSION)
 
 # Runs lint on entire repo
 .PHONY: lint
-lint: get-golangcilint
+lint: install-golangcilint
 	$(GOLANGCI_LINT) run ./...
 
 # Runs tests on entire repo
@@ -28,3 +28,6 @@ tidy:
 .PHONY: run
 run:
 	go run ./cmd/... -example=$(filter-out $@,$(MAKECMDGOALS))
+
+%:
+	@:
