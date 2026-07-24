@@ -85,7 +85,7 @@ linters:
     - wastedassign
     - whitespace
     - wrapcheck
-    - wsl
+    - wsl_v5
     - zerologlint
   settings:
     depguard:
@@ -149,8 +149,12 @@ linters:
       enable-all: true
     unparam:
       check-exported: true
-    wsl:
-      force-err-cuddling: true
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
+      enable:
+        - err
   exclusions:
     generated: lax
     presets:
