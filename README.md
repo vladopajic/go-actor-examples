@@ -46,7 +46,7 @@ make run producer_consumer     # run by name
 make run 01_producer_consumer  # run by full file name
 ```
 
-Some examples are intentionally surprising. They may stop early, wait forever,
+Some examples are **intentionally surprising**. They may stop early, wait forever,
 or expose a lifecycle problem. Treat those examples as puzzles: predict why the
 behavior happens before reading the following fix example.
 
