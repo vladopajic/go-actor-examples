@@ -10,8 +10,6 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/vladopajic/go-actor/actor"
-
-	"github.com/vladopajic/go-actor-examples/lib"
 )
 
 func init() {
@@ -42,7 +40,7 @@ func Run11() {
 	a.Start()
 	defer a.Stop()
 
-	<-lib.WaitForTermination()
+	<-WaitForTermination()
 }
 
 var _ actor.Actor = (*service)(nil) // ensure that service implements Actor

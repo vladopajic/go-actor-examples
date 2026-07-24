@@ -5,8 +5,6 @@ import (
 	"time"
 
 	"github.com/vladopajic/go-actor/actor"
-
-	"github.com/vladopajic/go-actor-examples/lib"
 )
 
 func init() {
@@ -49,7 +47,7 @@ func Run01() {
 	a.Start()
 	defer a.Stop()
 
-	<-lib.WaitForTermination()
+	<-WaitForTermination()
 }
 
 // producerConsumerProducer produces an incremented number on a 1 second interval.
