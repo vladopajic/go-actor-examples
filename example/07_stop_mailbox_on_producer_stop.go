@@ -74,8 +74,7 @@ func (w *stopMailboxConsumer) DoWork(c actor.Context) actor.WorkerStatus {
 
 	case num, isOpen := <-w.inMbx.ReceiveC():
 		if !isOpen {
-			// When receiver channel is closed we can safely end
-			// because no more messages could ever be sent to this channel.
+			// Mailbox is closed, so no more messages can arrive and worker can end.
 			return actor.WorkerEnd
 		}
 

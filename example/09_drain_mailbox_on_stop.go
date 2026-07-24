@@ -81,6 +81,7 @@ func (w *drainMailboxOnStopConsumer) DoWork(c actor.Context) actor.WorkerStatus 
 
 	case num, isOpen := <-w.inMbx.ReceiveC():
 		if !isOpen {
+			// Mailbox is closed, so no more messages can arrive and worker can end.
 			return actor.WorkerEnd
 		}
 

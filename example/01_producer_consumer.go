@@ -79,7 +79,12 @@ func (w *producerConsumerConsumer) DoWork(c actor.Context) actor.WorkerStatus {
 	case <-c.Done():
 		return actor.WorkerEnd
 
-	case num := <-w.inMbx.ReceiveC():
+	case num, isOpen := <-w.inMbx.ReceiveC():
+		if !isOpen {
+			// Mailbox is closed, so no more messages can arrive and worker can end.
+			return actor.WorkerEnd
+		}
+
 		fmt.Printf("consumed %d \t(worker %d)\n", num, w.id)
 
 		return actor.WorkerContinue
