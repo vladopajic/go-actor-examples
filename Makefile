@@ -28,3 +28,6 @@ tidy:
 .PHONY: run
 run:
 	go run ./cmd/... -example=$(filter-out $@,$(MAKECMDGOALS))
+
+%:
+	@:

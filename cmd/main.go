@@ -3,28 +3,29 @@ package main
 import (
 	"flag"
 	"fmt"
+	"strings"
+
+	"github.com/vladopajic/go-actor-examples/example"
 )
 
 func main() {
-	var exampleNo int
+	var exampleName string
 	//nolint:lll // usage description text in one line
-	flag.IntVar(&exampleNo, "example", 0, fmt.Sprintf("Example number to be started. Expected value in range { 1 ... %d }", len(examples())))
+	flag.StringVar(&exampleName, "example", "", fmt.Sprintf("Example number or name to be started. Expected value in: 1 ... %d, or %s", len(example.Names()), strings.Join(example.Names(), ", ")))
 	flag.Parse()
 
-	if exampleNo <= 0 {
+	if exampleName == "" {
 		fmt.Printf("specify example you wish to run with -example flag\n")
 		return
 	}
 
-	runExample(exampleNo)
+	runExample(exampleName)
 }
 
-func runExample(no int) {
-	runFn, exists := examples()[no]
-	if exists {
-		fmt.Printf("running example %d\n", no)
-		runFn()
-	} else {
-		fmt.Printf("example %d not found\n", no)
+func runExample(name string) {
+	fmt.Printf("======================= running example %s\n\n", name)
+
+	if !example.Run(name) {
+		fmt.Printf("example %s not found\n", name)
 	}
 }
