@@ -107,7 +107,7 @@ linters:
     dupl:
       threshold: 120
     errcheck:
-      disable-default-exclusions: true
+      disable-default-exclusions: false
       check-blank: true
     errchkjson:
       report-no-exported: true
